@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import requests
+import smtplib
+import os
 
 response = requests.get("https://api.npoint.io/5908ca000ec67c1ee3c6")
 # print(response.status_code)
@@ -17,6 +19,9 @@ def home():
 @app.route("/contact", methods=["POST", "GET"])
 def contact():
     if request.method == "POST":
+        MY_EMAIL = os.environ["MY_EMAIL"]
+        MY_PASSWORD = os.environ["MY_PASSWORD"]
+        TEST_EMAIL = os.environ["TEST_EMAIL"]
         print(request.form["name"])
         print(request.form["email"])
         print(request.form["phone"])
