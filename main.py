@@ -20,12 +20,25 @@ def home():
 def contact():
     if request.method == "POST":
         MY_EMAIL = os.environ["MY_EMAIL"]
+        print(MY_EMAIL)
         MY_PASSWORD = os.environ["MY_PASSWORD"]
+        print(MY_PASSWORD)
         TEST_EMAIL = os.environ["TEST_EMAIL"]
-        print(request.form["name"])
-        print(request.form["email"])
-        print(request.form["phone"])
-        print(request.form["message"])
+        GMAIL_SERVER = "smtp.gmail.com"
+        name = request.form["name"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+        message = request.form["message"]
+        content = f"Name: {name}\n" \
+                  f"Email: {email}\n" \
+                  f"Phone: {phone}\n" \
+                  f"Message: {message}\n"
+        with smtplib.SMTP(GMAIL_SERVER) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=TEST_EMAIL,
+                                msg=f"Subject: New message\n\n{content}")
         return render_template("contact.html", message_sent=True)
     return render_template("contact.html", message_sent=False)
 
