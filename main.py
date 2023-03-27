@@ -21,7 +21,12 @@ def contact():
 
 @app.route("/form-entry", methods=["POST"])
 def receive_data():
-    pass
+    if request.method == "POST":
+        print(request.form["name"])
+        print(request.form["email"])
+        print(request.form["phone"])
+        print(request.form["message"])
+        return "<h1>Successfully sent your message</h1>"
 
 
 @app.route("/about")
