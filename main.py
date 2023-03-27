@@ -14,20 +14,20 @@ def home():
     return render_template("index.html", posts=all_posts)
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["POST", "GET"])
 def contact():
-    return render_template("contact.html")
-
-
-@app.route("/form-entry", methods=["POST"])
-def receive_data():
-    if request.method == "POST":
+    if request.method == "GET":
+        return render_template("contact.html")
+    elif request.method == "POST":
         print(request.form["name"])
         print(request.form["email"])
         print(request.form["phone"])
         print(request.form["message"])
         return "<h1>Successfully sent your message</h1>"
 
+# @app.route("/form-entry", methods=["POST"])
+# def receive_data():
+#     if
 
 @app.route("/about")
 def about():
